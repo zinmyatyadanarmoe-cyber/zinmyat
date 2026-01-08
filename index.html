@@ -1,6 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zin Myat Yadanar Moe | Software & AI Developer</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #05080a;
+            --surface: #0d1216;
+            --accent: #10b981; 
+            --accent-soft: rgba(16, 185, 129, 0.1);
+            --accent-glow: rgba(16, 185, 129, 0.2);
+            --text-main: #ffffff;
+            --text-dim: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* Base Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        html { scroll-padding-top: 100px; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .section-title { font-size: 3.5rem; font-family: 'Outfit'; margin-bottom: 3rem; letter-spacing: -1px; line-height: 1.1; }
+        .section-title span { color: var(--accent); }
+
+        .bg-gradient {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 80% 20%, #10b98110 0%, transparent 40%),
+                        radial-gradient(circle at 10% 80%, #6366f108 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1.2rem 0;
+            z-index: 1000; backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border);
+            background: rgba(5, 8, 10, 0.7);
+        }
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-weight: 800; font-size: 1.5rem; font-family: 'Outfit'; color: var(--accent); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 2.5rem; }
+        .nav-links a { text-decoration: none; color: var(--text-dim); font-size: 0.9rem; transition: var(--transition); font-weight: 500; }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* Buttons */
+        .cta-button { 
+            display: inline-block; padding: 1rem 2.2rem; background: var(--accent); 
+            color: var(--bg); font-weight: 800; border-radius: 12px; 
+            text-decoration: none; transition: var(--transition); border: none; cursor: pointer;
+        }
+        .cta-button:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--accent-glow); }
+
+        /* Icon Utility */
+        .inline-icon { color: var(--accent); vertical-align: middle; margin: 0 4px; font-size: 1.2em; }
+
+        /* Hero */
+        .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 100px; }
+        .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center; }
+        .hero-content h1 { font-size: 5rem; font-family: 'Outfit'; line-height: 0.95; margin-bottom: 1.5rem; }
+        .hero-content h1 .outline { color: transparent; -webkit-text-stroke: 1px var(--border); }
+        .hero-content p { font-size: 1.2rem; color: var(--text-dim); margin-bottom: 2.5rem; max-width: 550px; }
+
+        .profile-card-main { 
+            width: 100%; aspect-ratio: 1/1.1; background: var(--surface); 
+            border-radius: 40px; border: 1px solid var(--border); overflow: hidden;
+            transform: rotate(2deg); transition: var(--transition);
+        }
+        .profile-card-main:hover { transform: rotate(0deg) scale(1.02); }
+        .profile-card-main img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Marquee */
+        .marquee { padding: 4rem 0; overflow: hidden; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--glass); }
+        .marquee-content { display: flex; gap: 4rem; animation: scroll 30s linear infinite; width: max-content; }
+        .marquee-item { display: flex; align-items: center; gap: 10px; color: var(--text-dim); font-weight: 600; font-size: 1.1rem; }
+        .marquee-item i { font-size: 1.8rem; color: var(--accent); }
+
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* Projects */
+        .project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; margin-bottom: 100px; }
+        .project-card { background: var(--glass); border: 1px solid var(--border); border-radius: 30px; padding: 2.5rem; transition: var(--transition); }
+        .project-card:hover { transform: translateY(-10px); border-color: var(--accent); background: var(--accent-soft); }
+        .project-icon { font-size: 3rem; color: var(--accent); margin-bottom: 1.5rem; display: block; }
+        .p-tag { font-size: 0.7rem; padding: 4px 10px; background: rgba(255,255,255,0.05); color: var(--accent); border-radius: 6px; font-weight: 700; margin-right: 6px; border: 1px solid var(--border); }
+
+        /* Contact Box */
+        .contact-box { 
+            display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 2rem; 
+            background: var(--glass); border: 1px solid var(--border); 
+            border-radius: 40px; overflow: hidden; padding: 1rem; margin-bottom: 100px;
+        }
+        .contact-left { background: var(--accent); color: var(--bg); padding: 3.5rem; border-radius: 30px; display: flex; flex-direction: column; justify-content: space-between; }
+        .contact-right { padding: 3.5rem; }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 968px) {
+            .hero-grid, .contact-box { grid-template-columns: 1fr; }
+            .hero-content h1 { font-size: 3.5rem; }
+            .nav-links { display: none; }
+            .section-title { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-gradient"></div>
+
+    <nav>
+        <div class="container nav-flex">
+            <a href="#" class="logo">ZIN MYAT</a>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About Me</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <a href="mailto:zinmyatyadanarmoe@gmail.com" class="cta-button" style="padding: 10px 20px; font-size: 0.8rem;">HIRE ME</a>
+        </div>
+    </nav>
+
+    <section id="home" class="hero container">
+        <div class="hero-grid">
+            <div class="hero-content reveal">
+                <span style="color: var(--accent); font-weight: 700; letter-spacing: 2px; font-size: 0.9rem;">SOFTWARE & AI DEVELOPER</span>
+                <h1>Building <span class="outline">Intelligent</span> <br>Logic & Systems.</h1>
+                <p>Hi, I'm <b>Zin Myat Yadanar Moe</b>. I specialize in <i class="ri-php-line inline-icon"></i> <b>PHP</b>, <i class="ri-code-s-slash-line inline-icon"></i> <b>C#</b>, and <i class="ri-robot-2-line inline-icon"></i> <b>AI/ML</b> to create smart, high-integrity systems.</p>
+                <div style="display: flex; gap: 1rem;">
+                    <a href="#projects" class="cta-button">View Projects</a>
+                    <a href="#contact" class="cta-button" style="background: transparent; border: 1px solid var(--border); color: white;">Get In Touch</a>
+                </div>
+            </div>
+            <div class="profile-visual reveal">
+                <div class="profile-card-main">
+                    <img src="zin.jpg" alt="Zin Myat Yadanar Moe">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <div class="marquee-item"><i class="ri-robot-2-line"></i> Machine Learning</div>
+            <div class="marquee-item"><i class="ri-brain-line"></i> AI</div>
+            <div class="marquee-item"><i class="ri-code-s-slash-fill"></i> C# .NET</div>
+            <div class="marquee-item"><i class="ri-php-line"></i> PHP</div>
+            <div class="marquee-item"><i class="ri-database-2-line"></i> MySQL</div>
+            <div class="marquee-item"><i class="ri-terminal-window-line"></i> OODD</div>
+            <div class="marquee-item"><i class="ri-robot-2-line"></i> Machine Learning</div>
+            <div class="marquee-item"><i class="ri-brain-line"></i> AI</div>
+        </div>
+    </div>
+
+    <section id="about" class="container" style="padding: 100px 0;">
+        <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start;">
+            <div class="reveal">
+                <div class="profile-card-main" style="transform: rotate(-2deg); margin-bottom: 2rem;">
+                    <img src="Girl.jpg" alt="About Zin Myat">
+                </div>
+                <div style="background: var(--glass); border: 1px solid var(--border); padding: 1.5rem; border-radius: 20px;">
+                    <h4 style="color: var(--accent); margin-bottom: 0.5rem;"><i class="ri-focus-2-line"></i> Current Focus</h4>
+                    <p style="font-size: 0.9rem; color: var(--text-dim);">Integrating Machine Learning into <i class="ri-global-line inline-icon"></i> web and <i class="ri-computer-line inline-icon"></i> desktop architectures.</p>
+                </div>
+            </div>
+
+            <div class="reveal">
+                <h2 class="section-title">Driven by <span>Logic</span>,<br>Powered by AI.</h2>
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                    I am a Software Developer bridging the gap between <i class="ri-settings-line inline-icon"></i> <b>Engineering</b> and <i class="ri-robot-line inline-icon"></i> <b>Intelligence</b>.
+                </p>
+                <p style="color: var(--text-dim); margin-bottom: 2rem;">
+                    Whether I am developing a secure <i class="ri-bank-line inline-icon"></i> **Online Banking System** or training predictive models, I focus on building software that learns and adapts.
+                </p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <h4 style="margin-bottom: 1rem; color: var(--accent);">Technical Stack</h4>
+                        <ul style="list-style: none; color: var(--text-dim); font-size: 0.95rem;">
+                            <li style="margin-bottom: 0.5rem;"><i class="ri-checkbox-circle-line" style="color: var(--accent);"></i> AI & Machine Learning</li>
+                            <li style="margin-bottom: 0.5rem;"><i class="ri-checkbox-circle-line" style="color: var(--accent);"></i> PHP & C# / .NET</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 style="margin-bottom: 1rem; color: var(--accent);">Advanced Skills</h4>
+                        <ul style="list-style: none; color: var(--text-dim); font-size: 0.95rem;">
+                            <li style="margin-bottom: 0.5rem;"><i class="ri-checkbox-circle-line" style="color: var(--accent);"></i> Neural Networks</li>
+                            <li style="margin-bottom: 0.5rem;"><i class="ri-checkbox-circle-line" style="color: var(--accent);"></i> OODD / SOLID</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="container">
+        <h2 class="section-title">Selected <span>Work</span></h2>
+        <div class="project-grid">
+            <div class="project-card reveal">
+                <i class="ri-hospital-line project-icon"></i>
+                <div style="margin-bottom: 1rem;">
+                    <span class="p-tag">PHP</span><span class="p-tag">MySQL</span>
+                </div>
+                <h3>Doctor Appointment System</h3>
+                <p style="color: var(--text-dim); font-size: 0.95rem; margin-top: 1rem;">A full-stack healthcare portal featuring patient scheduling, secure medical history logs, and clinic management.</p>
+            </div>
+
+            <div class="project-card reveal">
+                <i class="ri-bank-line project-icon"></i>
+                <div style="margin-bottom: 1rem;">
+                    <span class="p-tag">OODD</span><span class="p-tag">C#</span>
+                </div>
+                <h3>Online Banking System</h3>
+                <p style="color: var(--text-dim); font-size: 0.95rem; margin-top: 1rem;">Engineered using strict Object-Oriented principles. Features secure transaction logic and authentication.</p>
+            </div>
+
+           
+    </section>
+
+    <section id="contact" class="container reveal">
+        <div class="contact-box">
+            <div class="contact-left">
+                <div>
+                    <h2 style="font-family: 'Outfit'; font-size: 2.5rem; margin-bottom: 1rem;">Let's Talk</h2>
+                    <p style="margin-bottom: 2rem; opacity: 0.9;">Available for development roles and AI projects in 2026.</p>
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <span><i class="ri-mail-line"></i> zinmyatyadanarmoe@gmail.com</span>
+                        <span><i class="ri-map-pin-line"></i> Pyay, Myanmar</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 1.5rem; margin-top: 2rem;">
+                    <a href="https://github.com/zinmyatyadanarmoe-cyber" target="_blank" style="color: inherit; font-size: 2rem;"><i class="ri-github-fill"></i></a>
+                    <a href="https://www.linkedin.com/in/zin-myat-yadanar-moe-8813913a5" target="_blank" style="color: inherit; font-size: 2rem;"><i class="ri-linkedin-box-fill"></i></a>
+                </div>
+            </div>
+            <div class="contact-right">
+                <h2 style="font-family: 'Outfit'; font-size: 2.2rem; margin-bottom: 1.5rem;">Ready to build something <span>Smarter?</span></h2>
+                <p style="color: var(--text-dim); margin-bottom: 2.5rem;">I am open to full-time roles and collaborations. Let's discuss how my approach can help your team.</p>
+                <a href="mailto:zinmyatyadanarmoe@gmail.com" class="cta-button" style="width: 100%; text-align: center;">SEND AN EMAIL</a>
+            </div>
+        </div>
+        <p style="text-align: center; margin-bottom: 3rem; color: var(--text-dim); font-size: 0.8rem;">
+           © 2026 Zin Myat Yadanar Moe | All Rights Reserved.
+        </p>
+    </section>
+
+    <script>
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
 <meta charset="UTF-8">
 <title>GitHub Profile</title>
 
@@ -174,4 +453,5 @@ h1 {
 
 </body>
 </html>
+
 
